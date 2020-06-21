@@ -19,6 +19,22 @@ public class ToDoItemRepositoryImpl implements ToDoItemRepository {
     private final ToDoItemJsonReader reader;
     private final ToDoItemJsonWriter writer;
     
+    public boolean add(ToDoItem toDoItem, List<ToDoItem> toDoItems) {
+        // NOTE: abstract list cannot add elements
+        List<ToDoItem> newToDoItems = new ArrayList<ToDoItem>(toDoItems);
+        newToDoItems.add(toDoItem);
+
+        // TODO: error handling
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(newToDoItems);
+            writer.write(json);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
     public List<ToDoItem> list() {
         String json = reader.read();
         ObjectMapper mapper = new ObjectMapper();

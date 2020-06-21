@@ -201,6 +201,50 @@ public class ToDoItemRepositoryImplTest {
             assertEquals(tc.expected, writer.output(), "wrong output");
         }
     }
+
+    @Test
+    public void testAdd() {
+        class TestCase {
+            final List<ToDoItem> toDoItems;
+            final ToDoItem input;
+            final String expected;
+
+            TestCase(List<ToDoItem> toDoItems, ToDoItem input, String expected) {
+                this.toDoItems = toDoItems;
+                this.input = input;
+                this.expected = expected;
+            }
+        }
+
+        TestCase[] testCases = {
+            new TestCase(
+                Arrays.asList(new ToDoItem[] {}),
+                new ToDoItem(Arrays.asList(new Tag[] {}), "note"),
+                "[{\"tags\":[],\"body\":\"note\"}]"
+            ),
+            new TestCase(
+                Arrays.asList(new ToDoItem[] {
+                    new ToDoItem(
+                        Arrays.asList(new Tag[] {new Tag("hoge")}),
+                        "ABC #hoge"
+                    )
+                }),
+                new ToDoItem(Arrays.asList(new Tag[] {}), "note"),
+                "[{\"tags\":[{\"tag\":\"hoge\"}],\"body\":\"ABC #hoge\"}," +
+                "{\"tags\":[],\"body\":\"note\"}]"
+            )
+        };
+
+        for (TestCase tc : testCases) {
+            MockToDoItemJsonReader reader = new MockToDoItemJsonReader("");
+            MockToDoItemJsonWriter writer = new MockToDoItemJsonWriter();
+            ToDoItemRepositoryImpl repo = new ToDoItemRepositoryImpl(reader, writer);
+            
+            boolean ok = repo.add(tc.input, tc.toDoItems);
+            assertEquals(ok, true, "not successfully finished");
+            assertEquals(tc.expected, writer.output(), "wrong output");
+        }
+    }
 }
 
 class MockToDoItemJsonReader implements ToDoItemJsonReader {

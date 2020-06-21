@@ -7,11 +7,11 @@ public class CreateToDoItemInputData {
     private final List<Tag> tags;
     private final String body;
 
-    public List<Tag> tags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public String body() {
+    public String getBody() {
         return body;
     }
 

@@ -6,7 +6,7 @@ import domain.vo.ToDoItem;
 public class DeleteToDoItemInputData {
     private final ToDoItem toDoItem;
 
-    public ToDoItem toDoItem() {
+    public ToDoItem getToDoItem() {
         return toDoItem;
     }
 
