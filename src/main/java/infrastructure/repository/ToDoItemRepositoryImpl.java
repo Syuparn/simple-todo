@@ -1,6 +1,7 @@
 package infrastructure.repository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
@@ -35,8 +36,10 @@ public class ToDoItemRepositoryImpl implements ToDoItemRepository {
     public List<ToDoItem> findBy(Tag tag) {
         // TODO: error handling
         List<ToDoItem> toDoItems = list();
-        // TODO: filter
-        return toDoItems;
+        return toDoItems
+            .stream()
+            .filter(item -> item.getTags().contains(tag))
+            .collect(Collectors.toList());
     }
 
     public boolean delete(ToDoItem toDoItem) {
