@@ -1,5 +1,6 @@
 package infrastructure.repository;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,8 +8,8 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
 import com.fasterxml.jackson.annotation.JsonInclude.*;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.module.paranamer.ParanamerModule;
 import domain.vo.ToDoItem;
 import domain.vo.Tag;
@@ -42,11 +43,22 @@ public class ToDoItemRepositoryImpl implements ToDoItemRepository {
             .collect(Collectors.toList());
     }
 
-    public boolean delete(ToDoItem toDoItem) {
+    public boolean delete(ToDoItem toDelete, List<ToDoItem> toDoItems) {
+        List<ToDoItem> newToDoItems = toDoItems
+            .stream()
+            // eliminate toDoItem
+            .filter(item -> !item.equals(toDelete))
+            .collect(Collectors.toList());
+        
         // TODO: error handling
-        List<ToDoItem> toDoItems = list();
-        // TODO: filter and rewrite
-        return false;
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(newToDoItems);
+            writer.write(json);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 
     public ToDoItemRepositoryImpl(String jsonName) {

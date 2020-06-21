@@ -4,5 +4,5 @@ import java.util.*;
 import domain.vo.ToDoItem;
 
 interface ToDoItemJsonWriter {
-    void write(List<ToDoItem> toDoItems);
+    void write(String json);
 }

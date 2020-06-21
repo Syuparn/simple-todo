@@ -141,6 +141,66 @@ public class ToDoItemRepositoryImplTest {
                 "wrong tags");
         }
     }
+
+    @Test
+    public void testDelete() {
+        class TestCase {
+            final List<ToDoItem> input;
+            final ToDoItem toDelete;
+            final String expected;
+
+            TestCase(List<ToDoItem> input, ToDoItem toDelete, String expected) {
+                this.input = input;
+                this.toDelete = toDelete;
+                this.expected = expected;
+            }
+        }
+
+        TestCase[] testCases = {
+            new TestCase(
+                Arrays.asList(new ToDoItem[] {}),
+                new ToDoItem(Arrays.asList(new Tag[] {}), "note"),
+                "[]"
+            ),
+            new TestCase(
+                Arrays.asList(new ToDoItem[] {
+                    new ToDoItem(
+                        Arrays.asList(new Tag[] {new Tag("hoge")}),
+                        "ABC #hoge"
+                    )
+                }),
+                new ToDoItem(Arrays.asList(new Tag[] {}), "note"),
+                "[{\"tags\":[{\"tag\":\"hoge\"}],\"body\":\"ABC #hoge\"}]"
+            ),
+            new TestCase(
+                Arrays.asList(new ToDoItem[] {
+                    new ToDoItem(
+                        Arrays.asList(new Tag[] {new Tag("hoge")}),
+                        "ABC #hoge"
+                    ),
+                    new ToDoItem(
+                        Arrays.asList(new Tag[] {new Tag("fuga")}),
+                        "DE #fuga"
+                    )
+                }),
+                new ToDoItem(
+                    Arrays.asList(new Tag[] {new Tag("hoge")}),
+                    "ABC #hoge"
+                ),
+                "[{\"tags\":[{\"tag\":\"fuga\"}],\"body\":\"DE #fuga\"}]"
+            )
+        };
+
+        for (TestCase tc : testCases) {
+            MockToDoItemJsonReader reader = new MockToDoItemJsonReader("");
+            MockToDoItemJsonWriter writer = new MockToDoItemJsonWriter();
+            ToDoItemRepositoryImpl repo = new ToDoItemRepositoryImpl(reader, writer);
+
+            boolean ok = repo.delete(tc.toDelete, tc.input);
+            assertEquals(ok, true, "not successfully finished");
+            assertEquals(tc.expected, writer.output(), "wrong output");
+        }
+    }
 }
 
 class MockToDoItemJsonReader implements ToDoItemJsonReader {
@@ -156,13 +216,13 @@ class MockToDoItemJsonReader implements ToDoItemJsonReader {
 }
 
 class MockToDoItemJsonWriter implements ToDoItemJsonWriter {
-    private List<ToDoItem> output;
+    private String output;
     
-    public void write(List<ToDoItem> toDoItems) {
-        output = toDoItems;
+    public void write(String json) {
+        output = json;
     }
 
-    List<ToDoItem> output() {
+    String output() {
         return output;
     }
 }
