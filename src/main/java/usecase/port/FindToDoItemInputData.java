@@ -6,7 +6,7 @@ import domain.vo.Tag;
 public class FindToDoItemInputData {
     private final Tag tag;
 
-    public Tag tag() {
+    public Tag getTag() {
         return tag;
     }
 

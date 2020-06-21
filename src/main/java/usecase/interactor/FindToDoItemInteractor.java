@@ -13,7 +13,7 @@ public class FindToDoItemInteractor implements FindToDoItemInputPort {
     private final FindToDoItemOutputPort outputPort;
 
     public void handle(FindToDoItemInputData inputData, ToDoItemRepository repository) {
-        List<ToDoItem> toDoItems = repository.findBy(inputData.tag());
+        List<ToDoItem> toDoItems = repository.findBy(inputData.getTag());
         FindToDoItemOutputData outputData = new FindToDoItemOutputData(toDoItems);
         outputPort.output(outputData);
     }

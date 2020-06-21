@@ -12,7 +12,7 @@ public class DeleteToDoItemInteractor implements DeleteToDoItemInputPort {
     private final DeleteToDoItemOutputPort outputPort;
 
     public void handle(DeleteToDoItemInputData inputData, ToDoItemRepository repository) {
-        boolean ok = repository.delete(inputData.toDoItem(), repository.list());
+        boolean ok = repository.delete(inputData.getToDoItem(), repository.list());
         DeleteToDoItemOutputData outputData = new DeleteToDoItemOutputData(ok);
         outputPort.output(outputData);
     }

@@ -18,9 +18,9 @@ public class CreateToDoItemInteractor implements CreateToDoItemInputPort {
         ToDoItemFactory factory,
         ToDoItemRepository repository
     ) {
-        ToDoItem toDoItem = factory.create(inputData.tags(), inputData.body());
-        repository.add(toDoItem, repository.list());
-        CreateToDoItemOutputData outputData = new CreateToDoItemOutputData(toDoItem);
+        ToDoItem toDoItem = factory.create(inputData.getTags(), inputData.getBody());
+        boolean ok = repository.add(toDoItem, repository.list());
+        CreateToDoItemOutputData outputData = new CreateToDoItemOutputData(toDoItem, ok);
         outputPort.output(outputData);
     }
 
