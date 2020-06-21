@@ -5,5 +5,5 @@ import domain.vo.ToDoItem;
 import domain.vo.Tag;
 
 public interface ToDoItemFactory {
-    public ToDoItem create(List<Tag> tags, String body);
+    ToDoItem create(List<Tag> tags, String body);
 }

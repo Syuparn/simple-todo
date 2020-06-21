@@ -5,7 +5,7 @@ import domain.vo.ToDoItem;
 import domain.vo.Tag;
 
 public interface ToDoItemRepository {
-    public List<ToDoItem> list();
-    public List<ToDoItem> findBy(Tag tag);
-    public boolean delete(ToDoItem toDoItem);
+    List<ToDoItem> list();
+    List<ToDoItem> findBy(Tag tag);
+    boolean delete(ToDoItem toDoItem);
 }
