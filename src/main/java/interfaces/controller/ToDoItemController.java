@@ -15,11 +15,15 @@ public class ToDoItemController {
     private FindToDoItemInputPort findToDoItemInputPort;
     private ListToDoItemInputPort listToDoItemInputPort;
 
-    public void createToDoItem(String body, ToDoItemFactory factory) {
+    public void createToDoItem(
+        String body,
+        ToDoItemFactory factory,
+        ToDoItemRepository repository
+    ) {
         // parse tags
         List<Tag> tags = extractTags(body);
         CreateToDoItemInputData inputData = new CreateToDoItemInputData(tags, body);
-        createToDoItemInputPort.handle(inputData, factory);
+        createToDoItemInputPort.handle(inputData, factory, repository);
     }
 
     public void deleteToDoItem(String body, ToDoItemRepository repository) {
