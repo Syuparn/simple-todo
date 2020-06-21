@@ -1,6 +1,6 @@
 package domain.vo;
 
-import java.util.List;
+import java.util.*;
 
 public final class ToDoItem {
     private final List<Tag> tags;
@@ -16,7 +16,7 @@ public final class ToDoItem {
         }
 
         ToDoItem i = (ToDoItem)o;
-        return i.body == body;
+        return i.body.equals(body);
     }
 
     @Override
@@ -29,11 +29,11 @@ public final class ToDoItem {
         return body;
     }
 
-    public String body() {
+    public String getBody() {
         return body;
     }
 
-    public List<Tag> tags() {
+    public List<Tag> getTags() {
         return tags;
     }
 

@@ -16,7 +16,7 @@ public class Tag {
         }
 
         Tag t = (Tag)o;
-        return t.tag == tag;
+        return t.tag.equals(tag);
     }
 
     @Override
@@ -29,7 +29,16 @@ public class Tag {
         return tag;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
     public Tag(String tag) {
         this.tag = tag;
+    }
+
+    public Tag() {
+        super();
+        this.tag = "";
     }
 }
