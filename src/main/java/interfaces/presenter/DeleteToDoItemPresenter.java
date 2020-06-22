@@ -3,7 +3,7 @@ package interfaces.presenter;
 import interfaces.view.*;
 import usecase.port.*;
 
-public class DeleteToDoItemPresenter {
+public class DeleteToDoItemPresenter implements DeleteToDoItemOutputPort {
     private ConsoleView view = new ConsoleView();
 
     public void output(DeleteToDoItemOutputData outputData) {
