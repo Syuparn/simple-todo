@@ -46,7 +46,10 @@ public class ToDoItemController {
     }
 
     private List<Tag> extractTags(String body) {
-        List<Tag> tags = Arrays.asList(new Tag[] {});
+        // NOTE: Arrays.asList(new Tag[] {}) cannot add!!
+        // (raises UnsupportedOperationException)
+        // https://qiita.com/HomMarkHunt/items/c0172bd6c9801c5768d2
+        List<Tag> tags = new ArrayList<Tag>(Arrays.asList(new Tag[] {}));
         
         Pattern p = Pattern.compile("#([^ #]+)");
         Matcher m = p.matcher(body);
@@ -60,9 +63,9 @@ public class ToDoItemController {
 
     public ToDoItemController(
         CreateToDoItemInputPort createToDoItemInputPort,
+        DeleteToDoItemInputPort deleteToDoItemInputPort,
         FindToDoItemInputPort findToDoItemInputPort,
-        ListToDoItemInputPort listToDoItemInputPort,
-        DeleteToDoItemInputPort deleteToDoItemInputPort
+        ListToDoItemInputPort listToDoItemInputPort
     ) {
         this.createToDoItemInputPort = createToDoItemInputPort;
         this.deleteToDoItemInputPort = deleteToDoItemInputPort;

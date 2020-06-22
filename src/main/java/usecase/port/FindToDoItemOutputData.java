@@ -9,7 +9,7 @@ public class FindToDoItemOutputData {
     public List<ToDoItem> getToDoItems() {
         return toDoItems;
     }
-    
+
     public FindToDoItemOutputData(List<ToDoItem> toDoItems) {
         this.toDoItems = toDoItems;
     }
