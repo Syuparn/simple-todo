@@ -54,7 +54,7 @@ public class ToDoItemController {
         Pattern p = Pattern.compile("#([^ #]+)");
         Matcher m = p.matcher(body);
         while(m.find()){
-            Tag tag = new Tag(m.group());
+            Tag tag = new Tag(m.group(1));
             tags.add(tag);
         }
 
